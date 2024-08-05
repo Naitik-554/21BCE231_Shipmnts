@@ -76,7 +76,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [sorting, setSorting] = useState({ column: "id", order: "asc" });
   const [searchValue, setSearchValue] = useState("");
-  const columns = ["id", "name", "age"];
+  const columns = ["id", "name", "age","role","hireDate","isActive","salary","department","projectsCompleted","lastLogin","accessLevel"];
   const sortTable = (newSorting) => {
     setSorting(newSorting);
   };
@@ -85,12 +85,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    const url = `http://localhost:3004/users?_sort=${sorting.column}&_order=${sorting.order}&name_like=${searchValue}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((users) => {
-        setUsers(users);
-      });
+    // console.log(mockData)
+    setUsers(mockData);
   }, [sorting, searchValue]);
 
   return (
