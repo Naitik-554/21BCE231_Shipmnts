@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import mockData from "./data";
-// import "./usersTable.css";
+import "./App.css";
 
 const HeaderCell = ({ column, sorting, sortTable }) => {
-  const isDescSorting = sorting.column === column && sorting.order === "desc";
-  const isAscSorting = sorting.column === column && sorting.order === "asc";
-  const futureSortingOrder = isDescSorting ? "asc" : "desc";
+  const isDescSorting = sorting.column === column && sorting.ascending === false;
+  const isAscSorting = sorting.column === column && sorting.ascending === true;
+  const futureSortingOrder = isDescSorting ? true : false;
   return (
     <th
       key={column}
       className="users-table-cell"
-      onClick={() => sortTable({ column, order: futureSortingOrder })}
+      onClick={() => sortTable({ column, ascending: futureSortingOrder })}
     >
       {column}
       {isDescSorting && <span>▼</span>}
@@ -43,7 +43,7 @@ const Content = ({ entries, columns }) => {
         <tr key={entry.id}>
           {columns.map((column) => (
             <td key={column} className="users-table-cell">
-              {entry[column]}
+              { entry[column] }
             </td>
           ))}
         </tr>
@@ -63,7 +63,7 @@ const SearchBar = ({ searchTable }) => {
       <form onSubmit={submitForm}>
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search here"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
@@ -74,20 +74,33 @@ const SearchBar = ({ searchTable }) => {
 
 const App = () => {
   const [users, setUsers] = useState([]);
-  const [sorting, setSorting] = useState({ column: "id", order: "asc" });
+  const [sorting, setSorting] = useState({ column: "age", ascending: true });
   const [searchValue, setSearchValue] = useState("");
   const columns = ["id", "name", "age","role","hireDate","isActive","salary","department","projectsCompleted","lastLogin","accessLevel"];
-  const sortTable = (newSorting) => {
-    setSorting(newSorting);
-  };
+  function sortTable(key, ascending) {
+    setSorting({ key: key, ascending: ascending });
+  }
   const searchTable = (newSearchValue) => {
     setSearchValue(newSearchValue);
   };
 
-  useEffect(() => {
-    // console.log(mockData)
+  // useEffect(() => {
+  //   // console.log(mockData)
+  // }, [sorting, searchValue]);
+  
+  useEffect(()=> {
     setUsers(mockData);
-  }, [sorting, searchValue]);
+  },[]);
+
+  // useEffect(() => {
+  //   const currentUsersCopy = [...users];
+  //   const sortedCurrentUsers = currentUsersCopy.sort((a, b) => {
+  //     return a[sorting.key].localeCompare(b[sorting.key]);
+  //   });
+  //   setUsers(
+  //     sorting.ascending ? sortedCurrentUsers : sortedCurrentUsers.reverse()
+  //   );
+  // }, [users, sorting]);
 
   return (
     <div>
