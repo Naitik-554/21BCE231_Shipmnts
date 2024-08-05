@@ -3,9 +3,9 @@ import mockData from "./data";
 
 const columns = [
   { label: "Id", accessor: "id", sortable: true,  sortbyOrder: "asc" },
-  { label: "Name", accessor: "name", sortable: false },
+  { label: "Name", accessor: "name", sortable: true },
   { label: "Age", accessor: "age", sortable: true },
-  { label: "Role", accessor: "role", sortable: false },
+  { label: "Role", accessor: "role", sortable: true },
   { label: "Hire date", accessor: "hireDate", sortable: true },
   { label: "isActive", accessor: "isActive", sortable: true },
   { label: "Salary", accessor: "salary", sortable: true },
